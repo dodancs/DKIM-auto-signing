@@ -81,7 +81,7 @@ key "dkim_update_key" {
 };
 ```
 
-Replace *<YOUR KEY HERE>* with the secret you obtained in the previous step:
+Replace `<YOUR KEY HERE>` with the secret you obtained in the previous step:
 
 ```
 key "dkim_update_key" {
@@ -179,7 +179,7 @@ Before we can do anything, you will need to install [**opendkim**](http://opendk
 
 
 
-After opendkim is installed, download the auto-signing script from this repository into `/etc/opendkim/`. Also copy over the **TSIG key and private pair** from the previous chapter.
+After opendkim is installed, download the [**auto-signing script**](/projects/MOOWDESIGN/repos/dkmi-auto-signing/browse/dkim-autosigning.sh) from this repository into `/etc/opendkim/`. Also copy over the **TSIG key and private pair** from the previous chapter.
 
 
 
@@ -267,7 +267,7 @@ Under `/etc/opendkim/` create a new file called **SigningTable**. This file will
 
 Add all your domains in here as follows:
 
-> Explanation: **<ANY USER> @ <YOUR DOMAIN>     dkim._domainkey . <YOUR DOMAIN>**
+> Explanation: `<ANY USER>` @ `<YOUR DOMAIN>`  dkim._domainkey . `<YOUR DOMAIN>`
 
 ```ini
 *@mydomain1.com dkim._domainkey.mydomain1.com
@@ -284,7 +284,7 @@ Add all your domains in here as follows:
 
 If you want to also support e-mail addresses with **subdomains** add the following line:
 
-> Explanation: **<ANY USER> @ <ANY SUBDOMAIN> . <YOUR DOMAIN>     dkim._domainkey . <YOUR DOMAIN>**
+> Explanation: `<ANY USER>` @ `<ANY SUBDOMAIN> `.` <YOUR DOMAIN>`  dkim._domainkey . `<YOUR DOMAIN>`
 
 ```ini
 *@*.mydomain1.com dkim._domainkey.mydomain1.com
@@ -302,7 +302,7 @@ dkim._domainkey.mydomain2.com mydomain2.com:dkim:/etc/opendkim/keys/mydomain2.co
 ...
 ```
 
-> Explanaton: **<DKIM IDENTIFIER>._domainkey.<YOUR DOMAIN>    <YOUR DOMAIN>:<DKIM IDENTIFIER>:<SIGNING KEY LOCATION>**
+> Explanaton: `<DKIM IDENTIFIER>`._domainkey.`<YOUR DOMAIN>`   `<YOUR DOMAIN>`:`<DKIM IDENTIFIER>`:`<SIGNING KEY LOCATION>`
 
 
 
