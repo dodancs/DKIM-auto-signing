@@ -12,6 +12,13 @@ This section of the tutorial covers the preparation for implementing my auto-sig
 
 
 
+- [Bind9 DNS server](https://wiki.debian.org/Bind9)
+- [Postfix mail (SMTP) server](http://www.postfix.org/)
+- [OpenDKIM](http://opendkim.org/)
+- [nsupdate](https://linux.die.net/man/8/nsupdate)
+
+
+
 
 
 ### Prepare Bind9 DNS server
