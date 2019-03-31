@@ -12,6 +12,8 @@ This section of the tutorial covers the preparation for implementing my auto-sig
 
 
 
+
+
 ### Prepare Bind9 DNS server
 
 Before you do anything, you will need to set up remote updating of your DNS records.
@@ -24,6 +26,8 @@ This section covers how to set up Bind9 DNS server to accept DNS record updates 
 
 
 
+
+
 #### Step 1: Generating TSIG key pair
 
 SSH into your server where you have your DNS server and generate a key pair with *dnssec-keygen*:
@@ -33,6 +37,8 @@ dnssec-keygen -a HMAC-SHA512 -b 128 -n HOST <KEY NAME>
 ```
 
 Replace *<KEY NAME>* with any name you would like e.g. **dkim_update_key**.
+
+
 
 
 
@@ -56,13 +62,15 @@ Publish: 20190331085930
 Activate: 20190331085930
 ```
 
-> You can rename these files to dkim_update_key.key and dkim_update_key.private.
+> **NOTE:** You can rename these files to **dkim_update_key.key** and **dkim_update_key.private**.
 
 
 
 From these files you will need the actual *secret* which is next to the Key: notation in the .private file:
 
 **ITrrJVXiESWS3UwM7z9wOw==**
+
+
 
 
 
@@ -93,6 +101,8 @@ key "dkim_update_key" {
 ```
 
 Save the configuration file.
+
+
 
 
 
@@ -130,9 +140,13 @@ zone "myotherdomain.com" { type master; file "named.myotherdomain.com"; };
 
 
 
+
+
 ### Prepare Postfix server for DKIM
 
 This section covers preparing the mailing server for accepting DKIM and signing your e-mails.
+
+
 
 
 
@@ -167,9 +181,13 @@ non_smtpd_milters = inet:localhost:12301
 
 
 
+
+
 ### Set up OpenDKIM
 
 This section covers setting up the OpenDKIM service on your mailing server and also introducing the **auto-signing script**.
+
+
 
 
 
@@ -180,6 +198,8 @@ Before we can do anything, you will need to install [**opendkim**](http://opendk
 
 
 After opendkim is installed, download the [**auto-signing script**](/projects/MOOWDESIGN/repos/dkmi-auto-signing/browse/dkim-autosigning.sh) from this repository into `/etc/opendkim/`. Also copy over the **TSIG key and private pair** from the previous chapter.
+
+
 
 
 
@@ -237,6 +257,8 @@ Socket                  inet:12301@localhost
 
 
 
+
+
 #### Step 3: Create TrustedHosts file
 
 Under `/etc/opendkim/` create a new file called **TrustedHosts** and add all domain names you want to sign in here like so:
@@ -261,6 +283,8 @@ mydomain2.com
 
 
 
+
+
 #### Step 4: Create SigningTable file
 
 Under `/etc/opendkim/` create a new file called **SigningTable**. This file will tell the OpenDKIM service which *signing domain to choose* when receiving an e-mail signing request.
@@ -276,9 +300,13 @@ Add all your domains in here as follows:
 
 
 
+
+
 > **NOTE:** We are using `dkim._domainkey.` on all domains: as the `dkim` is the *DKIM identifier* and ` _domainkey` is the required subdomain used by the service
 >
 > You can also use a different *DKIM identifier* like any alpha-numeric string: `421378yr48firss._domainkey.` - but this tutorial and script uses **dkim** as the DKIM identifier for ease of use and not requiring complicated implementation.
+
+
 
 
 
@@ -289,6 +317,8 @@ If you want to also support e-mail addresses with **subdomains** add the followi
 ```ini
 *@*.mydomain1.com dkim._domainkey.mydomain1.com
 ```
+
+
 
 
 
@@ -306,9 +336,13 @@ dkim._domainkey.mydomain2.com mydomain2.com:dkim:/etc/opendkim/keys/mydomain2.co
 
 
 
+
+
 > **NOTE:** The file `/etc/opendkim/keys/mydomain1.com.private` is the signing key location which we have not yet created - but be sure to **keep the format like it is**!
 >
 > `/etc/opendkim/keys/<YOUR DOMAIN>.private`
+
+
 
 
 
@@ -324,6 +358,8 @@ dkim._domainkey.mydomain2.com mydomain2.com:dkim:/etc/opendkim/keys/mydomain2.co
 
 
 For the sake of this tutorial, we are going to use the standardized *DKIM identifiers* - **dkim**. This also needs to be like this in order for the auto-signing script to work.
+
+
 
 
 
@@ -417,6 +453,8 @@ echo "Done."
 
 
 
+
+
 #### That's it! You've officially configured DKIM e-mail signing!
 
 Now run the `dkim-autosigning.sh` script to generate your first DKIM keys!
@@ -424,6 +462,8 @@ Now run the `dkim-autosigning.sh` script to generate your first DKIM keys!
 
 
 To make things easy, you can now add this script into your **crontab** and run it on monthly bases.
+
+
 
 
 
