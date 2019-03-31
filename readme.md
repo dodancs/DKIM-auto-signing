@@ -197,7 +197,7 @@ Before we can do anything, you will need to install [**opendkim**](http://opendk
 
 
 
-After opendkim is installed, download the [**auto-signing script**](/projects/MOOWDESIGN/repos/dkmi-auto-signing/browse/dkim-autosigning.sh) from this repository into `/etc/opendkim/`. Also copy over the **TSIG key and private pair** from the previous chapter.
+After opendkim is installed, download the [**auto-signing script**](https://github.com/dodancs/DKIM-auto-signing/releases/) from this repository into `/etc/opendkim/`. Also copy over the **TSIG key and private pair** from the previous chapter.
 
 
 
