@@ -90,7 +90,7 @@ After locating this file use any text editor you like and add these lines at the
 ```ini
 key "dkim_update_key" {
 
-    algorithm hmac-md5;
+    algorithm hmac-sha512;
     secret "<YOUR KEY HERE>";
 
 };
@@ -101,7 +101,7 @@ Replace `<YOUR KEY HERE>` with the secret you obtained in the previous step:
 ```
 key "dkim_update_key" {
 
-    algorithm hmac-md5;
+    algorithm hmac-sha512;
     secret "ITrrJVXiESWS3UwM7z9wOw==";
     
 };
